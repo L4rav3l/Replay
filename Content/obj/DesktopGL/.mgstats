@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/pixelfont.xnb","FontDescriptionProcessor","SpriteFontContent",2027,136217,0.7010756
+"/home/marcellh/Dokumentumok/replay/Content/PixelifySans-Regular.ttf","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/PixelifySans-Regular.ttf","CopyItem","File",51312,51312,0.0005498
