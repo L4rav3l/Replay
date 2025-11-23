@@ -17,15 +17,28 @@ public class Indoor : IScene
     private Texture2D _tileset;
     private Texture2D _playerTexture;
     private Texture2D _stick;
+    private Texture2D _piecemushroom;
     private SpriteFont _pixelfont;
 
     private TmxMap _map;
     private List<Rectangle> _collision;
     private List<Rectangle> _cuttable;
+    private List<Rectangle> _pickable;
+    private Rectangle _item;
+    private Rectangle _deleteCuttable;
+    private Rectangle _deleteMushroom;
 
     private double _break;
+    private int _woodSum;
+    private int _mushroomSum;
+    private int _honeySum;
+    private int _keySum;
+    private int _object;
     private bool _hand = false;
     private bool _wood = false;
+    private bool _mushroom = false;
+    private bool _breakcountdown = false;
+
 
     private Player _player;
     private Camera2D _camera;
@@ -85,6 +98,58 @@ public class Indoor : IScene
         return cuttableTiles;
     }
 
+    public List<Rectangle> LoadMushroomObjects(string mapFilePath)
+    {
+        var map = new TmxMap(mapFilePath);
+        var mushroomTiles = new List<Rectangle>();
+
+        foreach(var objectGroup in map.ObjectGroups)
+        {
+            if(objectGroup.Name == "Mushroom")
+            {
+                foreach(var obj in objectGroup.Objects)
+                {
+                    var rect = new Rectangle(
+                        (int)obj.X,
+                        (int)obj.Y,
+                        (int)obj.Width,
+                        (int)obj.Height
+                    );
+
+                    mushroomTiles.Add(rect);
+                }
+            }
+        }
+
+        return mushroomTiles;
+    }
+
+    public Rectangle LoadItem(string mapFilePath)
+    {
+        var map = new TmxMap(mapFilePath);
+        var item = new Rectangle();
+
+        foreach(var objectGroup in map.ObjectGroups)
+        {
+            if(objectGroup.Name == "Item")
+             {
+                foreach(var obj in objectGroup.Objects)
+                {
+                    var rect = new Rectangle(
+                        (int)obj.X,
+                        (int)obj.Y,
+                        (int)obj.Width,
+                        (int)obj.Height
+                    );
+
+                    item = rect;
+                }
+             }
+        }
+
+        return item;
+    }
+
     public Indoor(GraphicsDevice _graphics, SceneManager _sceneManager, ContentManager _content)
     {
         this._graphics = _graphics;
@@ -102,10 +167,13 @@ public class Indoor : IScene
         _tileset = _content.Load<Texture2D>("tilemap");
         _playerTexture = _content.Load<Texture2D>("player");
         _stick = _content.Load<Texture2D>("stick");
+        _piecemushroom = _content.Load<Texture2D>("mushroom");
         _pixelfont = _content.Load<SpriteFont>("pixelfont");
 
         _collision = LoadCollisionObjects("Content/indoor.tmx");
         _cuttable = LoadCuttableObjects("Content/indoor.tmx");
+        _pickable = LoadMushroomObjects("Content/indoor.tmx");
+        _item = LoadItem("Content/indoor.tmx");
     }
 
     public void Update(GameTime gameTime)
@@ -114,6 +182,7 @@ public class Indoor : IScene
         _camera.Follow(_player.Position, new Vector2(_map.Width * 16, _map.Height * 16));
 
         bool cutting = false;
+        bool picking = false;
 
         double elapsed = gameTime.ElapsedGameTime.TotalSeconds * 1000;
 
@@ -126,23 +195,84 @@ public class Indoor : IScene
 
         foreach(Rectangle tree in _cuttable)
         {
-            if(_player.Hitbox.Intersects(tree) && state.IsKeyDown(Keys.E))
+            if(_player.Hitbox.Intersects(tree) && state.IsKeyDown(Keys.E) && _hand == false)
             {
-                Console.WriteLine(_break);
                 cutting = true;
+                _breakcountdown = true;
 
                 if(_break <= 0)
-                {
+                {   
                     _hand = true;
                     _wood = true;
+                    _deleteCuttable = tree;
                 }
             }
         }
 
-        if(!cutting)
+        foreach(Rectangle mushroom in _pickable)
+        {
+            if(_player.Hitbox.Intersects(mushroom) && state.IsKeyDown(Keys.E) && _hand == false)
+            {
+                picking = true;
+                _breakcountdown = true;
+
+                if(_break <= 0)
+                {
+                    _hand = true;
+                    _mushroom = true;
+                    _deleteMushroom = mushroom;
+                }
+            }
+        }
+
+        _cuttable.Remove(_deleteCuttable);
+        _pickable.Remove(_deleteMushroom);
+
+        if(!cutting && !picking)
         {
             _break = 5000;
+            _breakcountdown = false;
         }
+
+        if(_player.Hitbox.Intersects(_item) && state.IsKeyDown(Keys.E) && _hand == true)
+        {
+            if(_wood)
+            {
+                if(_woodSum < 3)
+                {
+                    _woodSum++;
+                    _wood = false;
+                    _hand = false;
+                    if(_woodSum == 3 && _object == 0)
+                    {
+                        _object++;
+                    }
+                } else {
+                    _wood = false;
+                    _hand = false;
+                }
+            }
+
+            if(_mushroom)
+            {
+                if(_mushroomSum < 3 && _object == 1)
+                {
+                    _mushroomSum++;
+                    _mushroom = false;
+                    _hand = false;
+
+                    if(_mushroomSum == 3 && _object == 1)
+                    {
+                        _object++;
+                    }
+                } else {
+                    _mushroom = false;
+                    _hand = false;
+                }
+            }
+        }
+
+        GameData.previous = state;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -190,13 +320,80 @@ public class Indoor : IScene
         {
             if(_wood)
             {
-                spriteBatch.Draw(_stick, new Vector2(_player.screenPos.X + 40, _player.screenPos.Y + 10), null, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0.2f);
+                spriteBatch.Draw(_stick, new Vector2(_player.screenPos.X + 40, _player.screenPos.Y + 10), null, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0.3f);
+            }
+
+            if(_mushroom)
+            {
+                spriteBatch.Draw(_piecemushroom, new Vector2(_player.screenPos.X + 40, _player.screenPos.Y + 10), null, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0.3f);
             }
         }
-        
-        Vector2 ObjectM = _pixelfont.MeasureString("WOOD HERE 3/0");
-        Vector2 Object = _camera.WorldToScreen(new Vector2(984, 935)) - new Vector2(ObjectM.X / 2, ObjectM.Y / 2);
 
-        spriteBatch.DrawString(_pixelfont, "WOOD HERE 3/0", Object, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.2f);
+        if(_breakcountdown == true)
+        {
+
+        Texture2D circle = CreateSegmentedCircle(_graphics, 15, 5000, (int)_break, Color.Gray);
+        spriteBatch.Draw(circle, new Vector2(_player.screenPos.X + 75, _player.screenPos.Y), null, Color.White, 0f, new Vector2(circle.Width / 2, circle.Height / 2), 1f, SpriteEffects.None, 0.3f);
+        }
+        
+        Vector2 ObjectM = Vector2.Zero;
+
+        if(_object == 0)
+        {
+            ObjectM = _pixelfont.MeasureString($"Bring Wood 3/{_woodSum}");
+            Vector2 Object = _camera.WorldToScreen(new Vector2(984, 935)) - new Vector2(ObjectM.X / 2, ObjectM.Y / 2);
+            
+            spriteBatch.DrawString(_pixelfont, $"Bring Wood 3/{_woodSum}", Object, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.2f);
+        }
+
+        if(_object == 1)
+        {
+            ObjectM = _pixelfont.MeasureString($"Bring Mushroom 3/{_mushroomSum}");
+            Vector2 Object = _camera.WorldToScreen(new Vector2(984, 935)) - new Vector2(ObjectM.X / 2, ObjectM.Y / 2);
+            
+            spriteBatch.DrawString(_pixelfont, $"Bring Mushroom 3/{_mushroomSum}", Object, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.2f);
+        }
+
+    }
+
+    Texture2D CreateSegmentedCircle(GraphicsDevice _graphics, int radius, int totalSegments, int filledSegments, Color color)
+    {
+        int diameter = radius * 2;
+        Texture2D texture = new Texture2D(_graphics, diameter, diameter);
+        Color[] colorData = new Color[diameter * diameter];
+
+        Vector2 center = new Vector2(radius, radius);
+
+        for(int y = 0; y < diameter; y++)
+        {
+            for(int x = 0; x < diameter; x++)
+            {
+                Vector2 pos = new Vector2(x,y) - center;
+                float distance = pos.Length();
+
+                if(distance <= radius)
+                {
+                    float angle = (float)Math.Atan2(pos.Y, pos.X);
+
+                    if(angle < 0)
+                    {
+                        angle += MathHelper.TwoPi;
+                    }
+
+                        int segment = (int)(angle / (MathHelper.TwoPi / totalSegments));
+                        if(segment < filledSegments)
+                        {
+                            colorData[x + y * diameter] = color;
+                        } else {
+                            colorData[x + y * diameter] = Color.Transparent;
+                        }
+                    } else {
+                        colorData[x + y * diameter] = Color.Transparent;
+                }
+            }
+        }
+
+        texture.SetData(colorData);
+        return texture;
     }
 }

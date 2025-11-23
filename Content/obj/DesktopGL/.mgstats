@@ -1,5 +1,6 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/home/marcellh/Dokumentumok/replay/Content/indoor.tmx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/indoor.tmx","CopyItem","File",42555,42555,0.0010087
+"/home/marcellh/Dokumentumok/replay/Content/indoor.tmx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/indoor.tmx","CopyItem","File",42918,42918,0.0010214
+"/home/marcellh/Dokumentumok/replay/Content/mushroom.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/mushroom.xnb","TextureProcessor","Texture2DContent",386,1109,0.36783
 "/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/pixelfont.xnb","FontDescriptionProcessor","SpriteFontContent",2027,136217,1.4726422
 "/home/marcellh/Dokumentumok/replay/Content/PixelifySans-Regular.ttf","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/PixelifySans-Regular.ttf","CopyItem","File",51312,51312,0.002388
 "/home/marcellh/Dokumentumok/replay/Content/player.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/player.xnb","TextureProcessor","Texture2DContent",1344,102485,0.3864989
