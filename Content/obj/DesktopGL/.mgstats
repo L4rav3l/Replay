@@ -1,3 +1,9 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/pixelfont.xnb","FontDescriptionProcessor","SpriteFontContent",2027,136217,0.7010756
-"/home/marcellh/Dokumentumok/replay/Content/PixelifySans-Regular.ttf","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/PixelifySans-Regular.ttf","CopyItem","File",51312,51312,0.0005498
+"/home/marcellh/Dokumentumok/replay/Content/indoor.tmx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/indoor.tmx","CopyItem","File",42555,42555,0.0010087
+"/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/pixelfont.xnb","FontDescriptionProcessor","SpriteFontContent",2027,136217,1.4726422
+"/home/marcellh/Dokumentumok/replay/Content/PixelifySans-Regular.ttf","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/PixelifySans-Regular.ttf","CopyItem","File",51312,51312,0.002388
+"/home/marcellh/Dokumentumok/replay/Content/player.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/player.xnb","TextureProcessor","Texture2DContent",1344,102485,0.3864989
+"/home/marcellh/Dokumentumok/replay/Content/stick.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/stick.xnb","TextureProcessor","Texture2DContent",161,1109,0.3788587
+"/home/marcellh/Dokumentumok/replay/Content/tilemap.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/tilemap.xnb","TextureProcessor","Texture2DContent",5392,151117,0.5835
+"/home/marcellh/Dokumentumok/replay/Content/tinytown.tsx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/tinytown.tsx","CopyItem","File",229,229,0.0002269
+"/home/marcellh/Dokumentumok/replay/Content/Wizard.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Wizard.xnb","TextureProcessor","Texture2DContent",2335,27633,0.136153

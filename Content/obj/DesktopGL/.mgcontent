@@ -5,8 +5,16 @@
   <Config />
   <SourceFiles>
     <File>/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont</File>
+    <File>/home/marcellh/Dokumentumok/replay/Content/player.png</File>
+    <File>/home/marcellh/Dokumentumok/replay/Content/stick.png</File>
+    <File>/home/marcellh/Dokumentumok/replay/Content/tilemap.png</File>
+    <File>/home/marcellh/Dokumentumok/replay/Content/Wizard.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

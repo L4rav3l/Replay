@@ -1,3 +1,9 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"/home/marcellh/Dokumentumok/replay/Content/indoor.tmx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/indoor.tmx","CopyItem","File",42555,42555,0.0010134
 "/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/pixelfont.xnb","FontDescriptionProcessor","SpriteFontContent",2027,136217,0.959712
 "/home/marcellh/Dokumentumok/replay/Content/PixelifySans-Regular.ttf","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/PixelifySans-Regular.ttf","CopyItem","File",51312,51312,0.001073
+"/home/marcellh/Dokumentumok/replay/Content/player.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/player.xnb","TextureProcessor","Texture2DContent",1344,102485,0.5209988
+"/home/marcellh/Dokumentumok/replay/Content/stick.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/stick.xnb","TextureProcessor","Texture2DContent",161,1109,0.4237448
+"/home/marcellh/Dokumentumok/replay/Content/tilemap.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/tilemap.xnb","TextureProcessor","Texture2DContent",5042,135253,0.7523349
+"/home/marcellh/Dokumentumok/replay/Content/tinytown.tsx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/tinytown.tsx","CopyItem","File",229,229,0.0008482
+"/home/marcellh/Dokumentumok/replay/Content/Wizard.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/Content/Wizard.xnb","TextureProcessor","Texture2DContent",2335,27633,0.4558643

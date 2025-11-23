@@ -58,7 +58,8 @@ public class Menu : IScene
         {
             if(_selected == 0)
             {
-
+                _sceneManager.AddScene(new OpenDialouge(_graphics, _sceneManager, _content), "openDialouge");
+                _sceneManager.ChangeScene("openDialouge");
             } else {
                 GameData.Exit = true;
             }
