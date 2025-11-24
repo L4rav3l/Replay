@@ -25,8 +25,23 @@
 /processorParam:TextureFormat=Color
 /build:honey.png
 
+#begin house.tmx
+/copy:house.tmx
+
 #begin indoor.tmx
 /copy:indoor.tmx
+
+#begin key.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:key.png
 
 #begin mushroom.png
 /importer:TextureImporter

@@ -1,6 +1,8 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "/home/marcellh/Dokumentumok/replay/Content/honey.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/honey.xnb","TextureProcessor","Texture2DContent",427,1109,0.3398633
-"/home/marcellh/Dokumentumok/replay/Content/indoor.tmx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/indoor.tmx","CopyItem","File",43480,43480,0.000986
+"/home/marcellh/Dokumentumok/replay/Content/house.tmx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/house.tmx","CopyItem","File",31062,31062,0.0012923
+"/home/marcellh/Dokumentumok/replay/Content/indoor.tmx","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/indoor.tmx","CopyItem","File",43591,43591,0.0017912
+"/home/marcellh/Dokumentumok/replay/Content/key.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/key.xnb","TextureProcessor","Texture2DContent",236,1109,0.3885197
 "/home/marcellh/Dokumentumok/replay/Content/mushroom.png","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/mushroom.xnb","TextureProcessor","Texture2DContent",386,1109,0.36783
 "/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/pixelfont.xnb","FontDescriptionProcessor","SpriteFontContent",2027,136217,1.4726422
 "/home/marcellh/Dokumentumok/replay/Content/PixelifySans-Regular.ttf","/home/marcellh/Dokumentumok/replay/Content/bin/DesktopGL/PixelifySans-Regular.ttf","CopyItem","File",51312,51312,0.002388

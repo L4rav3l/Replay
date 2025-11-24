@@ -16,6 +16,8 @@ public class OpenDialouge : IScene
     private Texture2D _dialouge;
     private Texture2D _wizard;
 
+    private Random _rnd;
+
     private string _text = "In Hynn Province, every 18-year-old\nboy and girl must build a house\nwithout some of the framework.\nThis includes slower movement, slower\ncutting, and other challenges.\nGood luck, sir or madam!\nPRESS E KEY";
     private double _textCountdown;
     private int _textInt;
@@ -34,6 +36,7 @@ public class OpenDialouge : IScene
 
         _dialouge = new Texture2D(_graphics, 1, 1);
         _dialouge.SetData(new [] {Color.White});
+        _rnd = new Random();
     }
 
     public void Update(GameTime gameTime)
@@ -54,6 +57,11 @@ public class OpenDialouge : IScene
         {
             GameData.Move = true;
             _sceneManager.AddScene(new Indoor(_graphics, _sceneManager, _content), "indoor");
+            _sceneManager.AddScene(new House(_graphics, _sceneManager, _content), "house");
+            _sceneManager.AddScene(new Ending(_graphics, _sceneManager, _content), "ending");
+
+            GameData.Speed = _rnd.Next(20, 100);
+            GameData.Break = _rnd.Next(3000, 10000);
             
             _sceneManager.ChangeScene("indoor");
         }

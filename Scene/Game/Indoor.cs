@@ -19,6 +19,7 @@ public class Indoor : IScene
     private Texture2D _stick;
     private Texture2D _piecemushroom;
     private Texture2D _honeyjar;
+    private Texture2D _keyTexture;
     private SpriteFont _pixelfont;
 
     private TmxMap _map;
@@ -26,6 +27,7 @@ public class Indoor : IScene
     private List<Rectangle> _cuttable;
     private List<Rectangle> _pickable;
     private List<Rectangle> _beehive;
+    private Rectangle _door;
     private Rectangle _item;
     private Rectangle _deleteCuttable;
     private Rectangle _deleteMushroom;
@@ -42,7 +44,7 @@ public class Indoor : IScene
     private bool _mushroom = false;
     private bool _honey = false;
     private bool _breakcountdown = false;
-
+    private bool _key = false;
 
     private Player _player;
     private Camera2D _camera;
@@ -153,6 +155,32 @@ public class Indoor : IScene
         return BeehiveTiles;
     }
 
+    public Rectangle LoadDoor(string mapFilePath)
+    {
+        var map = new TmxMap(mapFilePath);
+        var DoorTiles = new Rectangle();
+
+        foreach(var objectGroup in map.ObjectGroups)
+        {
+            if(objectGroup.Name == "Door")
+            {
+                foreach(var obj in objectGroup.Objects)
+                {
+                    var rect = new Rectangle(
+                        (int)obj.X,
+                        (int)obj.Y,
+                        (int)obj.Width,
+                        (int)obj.Height
+                    );
+
+                    DoorTiles = rect;
+                }
+            }
+        }
+
+        return DoorTiles;
+    }
+
     public Rectangle LoadItem(string mapFilePath)
     {
         var map = new TmxMap(mapFilePath);
@@ -198,12 +226,14 @@ public class Indoor : IScene
         _stick = _content.Load<Texture2D>("stick");
         _piecemushroom = _content.Load<Texture2D>("mushroom");
         _honeyjar = _content.Load<Texture2D>("honey");
+        _keyTexture = _content.Load<Texture2D>("key");
         _pixelfont = _content.Load<SpriteFont>("pixelfont");
 
         _collision = LoadCollisionObjects("Content/indoor.tmx");
         _cuttable = LoadCuttableObjects("Content/indoor.tmx");
         _pickable = LoadMushroomObjects("Content/indoor.tmx");
         _beehive = LoadBeeHiveObjects("Content/indoor.tmx");
+        _door = LoadDoor("Content/indoor.tmx");
         _item = LoadItem("Content/indoor.tmx");
     }
 
@@ -211,6 +241,14 @@ public class Indoor : IScene
     {
         _player.Update(gameTime, _collision, _camera);
         _camera.Follow(_player.Position, new Vector2(_map.Width * 16, _map.Height * 16));
+
+        _hand = GameData.Hand;
+        _wood = GameData.Wood;
+        _honey = GameData.Honey;
+        _mushroom = GameData.Mushroom;
+        _key = GameData.Key;
+
+        _player.Speed = GameData.Speed;
 
         bool cutting = false;
         bool picking = false;
@@ -279,8 +317,13 @@ public class Indoor : IScene
 
         if(!cutting && !picking && !stoling)
         {
-            _break = 5000;
+            _break = GameData.Break;
             _breakcountdown = false;
+        }
+
+        if(_player.Hitbox.Intersects(_door) && state.IsKeyDown(Keys.E) && !GameData.previous.IsKeyDown(Keys.E))
+        {
+            _sceneManager.ChangeScene("house");
         }
 
         if(_player.Hitbox.Intersects(_item) && state.IsKeyDown(Keys.E) && _hand == true)
@@ -337,7 +380,31 @@ public class Indoor : IScene
                     _hand = false;
                 }
             }
+
+            if(_key)
+            {
+                if(_keySum < 1 && _object == 3)
+                {
+                    _keySum++;
+                    _key = false;
+                    _hand = false;
+
+                    if(_keySum == 1 && _object == 3)
+                    {
+                        _sceneManager.ChangeScene("ending");
+                    }
+                } else {
+                    _key = false;
+                    _hand = false;
+                }
+            }
         }
+
+        GameData.Hand = _hand;
+        GameData.Wood = _wood;
+        GameData.Honey = _honey;
+        GameData.Mushroom = _mushroom;
+        GameData.Key = _key;
 
         GameData.previous = state;
     }
@@ -399,12 +466,17 @@ public class Indoor : IScene
             {
                 spriteBatch.Draw(_honeyjar, new Vector2(_player.screenPos.X + 40, _player.screenPos.Y + 10), null, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0.3f);
             }
+
+            if(_key)
+            {
+                spriteBatch.Draw(_keyTexture, new Vector2(_player.screenPos.X + 40, _player.screenPos.Y + 10), null, Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0.3f);
+            }
         }
 
         if(_breakcountdown == true)
         {
 
-        Texture2D circle = CreateSegmentedCircle(_graphics, 15, 5000, (int)_break, Color.Gray);
+        Texture2D circle = CreateSegmentedCircle(_graphics, 15, GameData.Break, (int)_break, Color.Gray);
         spriteBatch.Draw(circle, new Vector2(_player.screenPos.X + 75, _player.screenPos.Y), null, Color.White, 0f, new Vector2(circle.Width / 2, circle.Height / 2), 1f, SpriteEffects.None, 0.3f);
         }
         
@@ -432,6 +504,14 @@ public class Indoor : IScene
             Vector2 Object = _camera.WorldToScreen(new Vector2(984, 935)) - new Vector2(ObjectM.X / 2, ObjectM.Y / 2);
             
             spriteBatch.DrawString(_pixelfont, $"Stole Honey 3/{_honeySum}", Object, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.2f);
+        }
+
+        if(_object == 3)
+        {
+            ObjectM = _pixelfont.MeasureString($"Bring Key 1/{_keySum}");
+            Vector2 Object = _camera.WorldToScreen(new Vector2(984, 935)) - new Vector2(ObjectM.X / 2, ObjectM.Y / 2);
+            
+            spriteBatch.DrawString(_pixelfont, $"Bring Key 1/{_keySum}", Object, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.2f);
         }
 
     }

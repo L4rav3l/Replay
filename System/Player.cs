@@ -10,7 +10,7 @@ public class Player
 {
     public Vector2 Position;
     public Vector2 screenPos;
-    public float Speed = 100f;
+    public float Speed = GameData.Speed;
 
     public int Width = 16;
     public int Height = 16;

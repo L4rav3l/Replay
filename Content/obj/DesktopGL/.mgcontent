@@ -5,6 +5,7 @@
   <Config />
   <SourceFiles>
     <File>/home/marcellh/Dokumentumok/replay/Content/honey.png</File>
+    <File>/home/marcellh/Dokumentumok/replay/Content/key.png</File>
     <File>/home/marcellh/Dokumentumok/replay/Content/mushroom.png</File>
     <File>/home/marcellh/Dokumentumok/replay/Content/pixelfont.spritefont</File>
     <File>/home/marcellh/Dokumentumok/replay/Content/player.png</File>
@@ -13,6 +14,7 @@
     <File>/home/marcellh/Dokumentumok/replay/Content/Wizard.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
